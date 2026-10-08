@@ -1,0 +1,32 @@
+{% extends "blog/base.html" %}
+{% block title %}Discover Stories · BlogPlatform{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+  <h1 class="display-6 fw-bold mb-1">Discover Stories</h1>
+  <p class="text-body-secondary">Explore articles from our community of writers</p>
+</div>
+
+<div class="mb-4">
+  <div class="position-relative mb-3">
+    <i class="bi bi-search search-icon"></i>
+    <input type="search" id="searchInput" class="form-control form-control-lg ps-5" placeholder="Search posts..." autocomplete="off">
+  </div>
+  <div class="d-flex align-items-center gap-2 overflow-auto pb-2" id="categoryFilters">
+    <i class="bi bi-funnel text-secondary flex-shrink-0"></i>
+    {% for category in categories %}
+    <button type="button" class="btn btn-sm filter-pill flex-shrink-0 {% if forloop.first %}active{% endif %}" data-category="{{ category }}">{{ category }}</button>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="postGrid">
+  {% for post in posts %}{% include "blog/_post_card.html" %}{% endfor %}
+</div>
+
+<div id="noResults" class="text-center py-5 {% if posts %}d-none{% endif %}">
+  <div class="empty-icon mx-auto mb-3"><i class="bi bi-search fs-2"></i></div>
+  <h3 class="h5">No posts found</h3>
+  <p class="text-secondary">Try adjusting your search or filter criteria</p>
+</div>
+{% endblock %}

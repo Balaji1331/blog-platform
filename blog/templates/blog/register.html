@@ -1,0 +1,33 @@
+{% extends "blog/base.html" %}
+{% block title %}Register · BlogPlatform{% endblock %}
+{% block navbar %}{% endblock %}
+
+{% block body %}
+<main class="auth-wrap d-flex align-items-center justify-content-center px-3 py-5">
+  <div class="w-100" style="max-width: 30rem;">
+    <div class="text-center mb-4">
+      <div class="brand-mark brand-mark-lg mx-auto mb-3">B</div>
+      <h1 class="h2 fw-bold">Create your account</h1>
+      <p class="text-body-secondary">Join BlogPlatform and start writing</p>
+    </div>
+
+    <div class="card">
+      <div class="card-body p-4">
+        {% if form.non_field_errors %}<div class="alert alert-danger py-2">{{ form.non_field_errors }}</div>{% endif %}
+        <form method="post" data-loading-form>
+          {% csrf_token %}
+          {% include "blog/_field.html" with field=form.name %}
+          {% include "blog/_field.html" with field=form.email %}
+          {% include "blog/_field.html" with field=form.bio %}
+          {% include "blog/_field.html" with field=form.password1 %}
+          {% include "blog/_field.html" with field=form.password2 %}
+          <button type="submit" class="btn btn-brand w-100 mt-2">Create account</button>
+        </form>
+      </div>
+    </div>
+    <p class="text-center small text-secondary mt-4">
+      Already registered? <a href="{% url 'login' %}" class="link-brand">Sign in</a>
+    </p>
+  </div>
+</main>
+{% endblock %}

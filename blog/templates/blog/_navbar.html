@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-md sticky-top app-navbar">
+  <div class="container-xl">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'home' %}">
+      <span class="brand-mark">B</span>
+      <span class="fw-bold">BlogPlatform</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav me-auto gap-1 mt-3 mt-md-0">
+        <li class="nav-item">
+          <a class="nav-link nav-pill {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">
+            <i class="bi bi-house me-1"></i>All Posts
+          </a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link nav-pill {% if request.resolver_match.url_name == 'my_posts' %}active{% endif %}" href="{% url 'my_posts' %}">
+            <i class="bi bi-file-text me-1"></i>My Posts
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+
+      <div class="d-flex align-items-center gap-3 mt-3 mt-md-0">
+        {% if user.is_authenticated %}
+        <a href="{% url 'post_create' %}" class="btn btn-brand btn-sm d-flex align-items-center gap-2">
+          <i class="bi bi-pencil-square"></i><span>Write</span>
+        </a>
+        <div class="d-flex align-items-center gap-2 ps-3 border-start">
+          <span class="avatar avatar-sm">{{ user.initial }}</span>
+          <span class="small fw-medium text-body-secondary">{{ user.name }}</span>
+          <form method="post" action="{% url 'logout' %}" class="m-0">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-ghost" title="Logout"><i class="bi bi-box-arrow-right"></i></button>
+          </form>
+        </div>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn btn-sm btn-outline-secondary">Sign in</a>
+        <a href="{% url 'register' %}" class="btn btn-sm btn-brand">Register</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
